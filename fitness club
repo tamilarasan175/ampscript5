@@ -1,0 +1,46 @@
+Assignment Brief:
+You are working for a fitness club that wants to send personalized messages to its members. The goal is to use AMPscript to dynamically create content that will make each member feel valued and recognized. Your task is to craft an email message that utilizes AMPscript functions learned in Week 1 to personalize the message based on member data.
+Requirements:
+Ensure that all member names are displayed properly and correctly.
+Display membership type to uppercase for emphasis.
+Calculate the date for the next scheduled fitness class, which is 7 days from today. (17/05/1995) format.
+
+
+%%[
+
+/* RETRIEVING FIELDS FROM DE */
+SET @firstName = [First Name]
+SET @memType = [MembershipType]
+SET @weight = [LastWeight]
+
+/* FIRSTNAME CLEANING LOGIC */
+SET @firstNameTrim = Trim(@firstName)
+
+SET @finalName = Propercase(@firstNameTrim)
+
+/* Membership Type Reformat */
+SET @memTypeCaps = Uppercase(@memType)
+
+/* LastWeight Reformat */
+SET @weightFormat = FormatNumber(@weight, "#0.0")
+
+/* Next Scheduled Date */
+SET @systemDate = Now(1)
+SET @localDate = SystemDateToLocalDate(@systemDate)
+SET @nextClass = Dateadd(@localDate, 7, "D")
+
+SET @nextClassFormat = FormatDate(@nextClass, "DD/MM/YYYY")
+
+]%%
+
+Output:
+Hello %%=v(@finalName)=%%,
+
+Welcome back to your fitness journey at our club! As a valued %%=v(@memTypeCaps)=%% member, we're committed to helping you reach your goals.
+
+Your last recorded weight was %%=v(@weightFormat)=%% lbs. Keep up the great work!
+
+Just a reminder, your next scheduled class is on %%=v(@nextClassFormat)=%%. We can't wait to see you!
+
+Best regards,
+Your Fitness Club Team
